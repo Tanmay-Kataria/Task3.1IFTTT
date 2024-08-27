@@ -1,7 +1,7 @@
 #include <WiFiNINA.h>
 #include "secret.h"
 #define LIGHT_SENSOR 2
-//please enter your sensitive data in the Secret tab
+
 char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASSWORD;
 
@@ -12,9 +12,8 @@ char   HOST_NAME[] = "maker.ifttt.com";
 String PATH_NAME   = "/trigger/Light_Changed/with/key/dCzgH4VqCd8yZ_jYfZseMYt86OHL13Bdzn5tjtvUlSZ"; // change your EVENT-NAME and YOUR-KEY
 String QUERY_STRING = "?";
 
-// Data variables for IFTTT
 String light_state = "Off";
-int light_value = 0;
+int light_value = 0;X
 String last_light = "Off";
 
 bool connectToWiFi(char ssid[], char pass[]) {
@@ -70,9 +69,6 @@ void setup() {
 
   Serial.begin(115200);
   connectToWiFi(ssid,pass);
-  while (!Serial);
-
-  send_webhook(QUERY_STRING);
 
   pinMode(LIGHT_SENSOR,INPUT);
 }
@@ -105,11 +101,11 @@ void loop() {
     light_state = "Off";
   }
 
-  // Send notification only if state changes or 'c' is pressed
+  // Send notification only if state changes || 'c' is pressed - Debugging Only
   if (light_state != last_light || Serial.read() == 'c') {
     sendWebhook(light_state);
     last_light = light_state;
   }
-  delay(1000); // Adjust delay based on desired update frequency
+  delay(1000); 
 
 }
